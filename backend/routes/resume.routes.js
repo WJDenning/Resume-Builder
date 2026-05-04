@@ -102,18 +102,70 @@ router.get("/:id/build", (req, res) => {
     const resumeId = req.params.id;
 
     db.all(
-        `SELECT * FROM resume_items WHERE resume_id = ?`,
+        "SELECT * FROM resume_items WHERE resume_id = ?",
         [resumeId],
         (err, items) => {
             if (err) return res.status(500).json({ error: err.message });
 
-            // In a full implementation, you'd JOIN against:
-            // jobs, skills, education, etc.
-            // For now we return structure only
+            if (!items.length) {
+                return res.json({
+                    resume_id: resumeId,
+                    sections: {}
+                });
+            }
 
-            res.json({
+            const result = {
                 resume_id: resumeId,
-                items: items
+                jobs: [],
+                skills: [],
+                education: [],
+                certifications: [],
+                awards: []
+            };
+
+            let pending = items.length;
+
+            items.forEach(item => {
+                const { item_type, item_id } = item;
+
+                let table = "";
+
+                switch (item_type) {
+                    case "job":
+                        table = "jobs";
+                        break;
+                    case "skill":
+                        table = "skills";
+                        break;
+                    case "education":
+                        table = "education";
+                        break;
+                    case "certification":
+                        table = "certifications";
+                        break;
+                    case "award":
+                        table = "awards";
+                        break;
+                    default:
+                        pending--;
+                        return;
+                }
+
+                db.get(
+                    `SELECT * FROM ${table} WHERE id = ?`,
+                    [item_id],
+                    (err, row) => {
+                        if (!err && row) {
+                            result[table].push(row);
+                        }
+
+                        pending--;
+
+                        if (pending === 0) {
+                            res.json(result);
+                        }
+                    }
+                );
             });
         }
     );
