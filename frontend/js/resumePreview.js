@@ -27,7 +27,7 @@ async function renderResumePreview() {
 
     container.innerHTML = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 8.5in;">
-            <h2 style="text-align: center; margin-bottom: 0.5in; border-bottom: 2px solid #333; padding-bottom: 0.25in;">RESUME</h2>
+            <h2 style="text-align: center; margin-bottom: 0.5in; border-bottom: 2px solid #333; padding-bottom: 0.25in;">${document.getElementById("inputResumeName").value || "Resume"}</h2>
 
             ${jobs.length > 0 ? `
             <div style="margin-bottom: 0.3in;">

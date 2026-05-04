@@ -36,8 +36,8 @@ The application also integrates generative AI to provide feedback and suggestion
 
 ### Frontend  
 - HTML5  
-- CSS3 (Bootstrap and limited custom CSS)  
-- Vanilla JavaScript (no frameworks)  
+- CSS3 (Bootstrap)
+- Vanilla JavaScript
 
 ### Backend  
 - Node.js  
@@ -116,7 +116,7 @@ Additional libraries, if added, will be documented and attributed within the app
 
 ## Accessibility  
 
-This application is designed with accessibility in mind and aims to meet or exceed a Lighthouse accessibility score of 93. Documentation of testing results will be included in the final submission.
+This application is designed with accessibility in mind and aims to meet or exceed a Lighthouse accessibility score of 93.
 
 ---
 
@@ -142,3 +142,7 @@ This project incorporates generative AI tools to assist in development and conte
 - This application is intended to run locally  
 - No external CDNs are used; all dependencies are bundled within the project  
 - Future improvements may include packaging as an Electron application  
+
+## Project Sharing
+
+This project is free to be shared among anybody for the use of studying or using the application.
