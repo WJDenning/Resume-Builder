@@ -1,13 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Resume Builder</title>
+
+    <link rel="stylesheet" href="./libs/bootstrap-5.2.3/bootstrap-5.2.3-dist/css/bootstrap.min.css">
 </head>
+
 <body>
-    
-    <script src="js/script.js"></script>
+
+<div class="container-fluid">
+    <div class="row vh-100">
+
+        <!-- SIDEBAR -->
+        <div class="col-3 bg-dark text-white p-3">
+
+            <h4 class="mb-4">Resume Builder</h4>
+
+            <div class="list-group">
+
+                <button class="list-group-item" data-section="resume">Resume</button>
+                <button class="list-group-item" data-section="jobs">Jobs</button>
+                <button class="list-group-item" data-section="skills">Skills</button>
+                <button class="list-group-item" data-section="education">Education</button>
+                <button class="list-group-item" data-section="awards">Awards</button>
+                <button class="list-group-item" data-section="certifications">Certifications</button>
+                <button class="list-group-item" data-section="ai">AI Assistant</button>
+                <button class="list-group-item" data-section="settings">API Settings</button>
+
+            </div>
+
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="col-9 p-4">
+
+            <!-- RESUME -->
+            <div id="resume" class="content-section">
+                <h2>Resume Builder</h2>
+
+                <button id="generateResumeBtn" class="btn btn-primary">
+                    Generate Resume
+                </button>
+
+                <div id="resumeOutput" class="mt-3"></div>
+                <div id="resumePreview" class="border p-3 mt-3"></div>
+            </div>
+
+            <!-- JOBS -->
+            <div id="jobs" class="content-section d-none">
+                <h2>Jobs</h2>
+
+                <form id="jobForm">
+                    <input class="form-control mb-2" id="jobCompany" placeholder="Company">
+                    <input class="form-control mb-2" id="jobTitle" placeholder="Title">
+                    <input class="form-control mb-2" id="jobLocation" placeholder="Location">
+                    <label class="form-label">Start Date</label>
+                    <input class="form-control mb-2" id="jobStartDate" type="date">
+                    <label class="form-label">End Date (or Current)</label>
+                    <input class="form-control mb-2" id="jobEndDate" type="date">
+                    <label class="form-label">Description (one item per line for bullets)</label>
+                    <textarea class="form-control mb-2" id="jobDescription" placeholder="Line 1&#10;Line 2&#10;Line 3" rows="4"></textarea>                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveJobDescription">Improve with AI</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoJobDescription" style="display: none;">Undo</button>
+                    </div>                    <button class="btn btn-success">Add Job</button>
+                </form>
+
+                <div id="jobList" class="mt-3"></div>
+            </div>
+
+            <!-- SKILLS -->
+            <div id="skills" class="content-section d-none">
+                <h2>Skills</h2>
+
+                <form id="skillForm">
+                    <input class="form-control mb-2" id="skillName" placeholder="Skill">
+                    <select class="form-control mb-2" id="skillProficiency">
+                        <option value="">Select Proficiency</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                    </select>
+                    <button class="btn btn-success">Add Skill</button>
+                </form>
+
+                <div id="skillList" class="mt-3"></div>
+            </div>
+
+            <!-- EDUCATION -->
+            <div id="education" class="content-section d-none">
+                <h2>Education</h2>
+
+                <form id="educationForm">
+                    <input class="form-control mb-2" id="schoolName" placeholder="School">
+                    <input class="form-control mb-2" id="degree" placeholder="Degree">
+                    <input class="form-control mb-2" id="fieldOfStudy" placeholder="Field of Study">
+                    <label class="form-label">Graduation Date</label>
+                    <input class="form-control mb-2" id="educationDate" type="date">
+                    <input class="form-control mb-2" id="gpa" placeholder="GPA (e.g., 3.8)">
+                    <label class="form-label">Description (optional)</label>
+                    <textarea class="form-control mb-2" id="educationDescription" placeholder="Notable achievements or honors" rows="3"></textarea>                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveEducationDescription">Improve with AI</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoEducationDescription" style="display: none;">Undo</button>
+                    </div>                    <button class="btn btn-success">Add Education</button>
+                </form>
+
+                <div id="educationList" class="mt-3"></div>
+            </div>
+
+            <!-- AWARDS -->
+            <div id="awards" class="content-section d-none">
+                <h2>Awards</h2>
+
+                <form id="awardForm">
+                    <input class="form-control mb-2" id="awardTitle" placeholder="Award Title">
+                    <input class="form-control mb-2" id="awardIssuer" placeholder="Issuing Organization">
+                    <label class="form-label">Date Received</label>
+                    <input class="form-control mb-2" id="awardDate" type="date">
+                    <label class="form-label">Description (optional)</label>
+                    <textarea class="form-control mb-2" id="awardDescription" placeholder="Award details" rows="3"></textarea>                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveAwardDescription">Improve with AI</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoAwardDescription" style="display: none;">Undo</button>
+                    </div>                    <button class="btn btn-success">Add Award</button>
+                </form>
+
+                <div id="awardList" class="mt-3"></div>
+            </div>
+
+            <!-- CERTIFICATIONS -->
+            <div id="certifications" class="content-section d-none">
+                <h2>Certifications</h2>
+
+                <form id="certForm">
+                    <input class="form-control mb-2" id="certName" placeholder="Certification Name">
+                    <input class="form-control mb-2" id="certIssuer" placeholder="Issuing Organization">
+                    <label class="form-label">Date Achieved</label>
+                    <input class="form-control mb-2" id="certDate" type="date">
+                    <button class="btn btn-success">Add Certification</button>
+                </form>
+
+                <div id="certList" class="mt-3"></div>
+            </div>
+
+            <!-- AI -->
+            <div id="ai" class="content-section d-none">
+                <h2>AI Assistant</h2>
+
+                <textarea id="aiInput" class="form-control mb-2"></textarea>
+
+                <button id="aiButton" class="btn btn-warning">
+                    Improve Text
+                </button>
+
+                <div id="aiOutput" class="mt-3"></div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div id="settings" class="content-section d-none">
+                <h2>API Settings</h2>
+
+                <label>Gemini API Key</label>
+                <input id="apiKeyInput" class="form-control mb-2">
+
+                <button id="saveKeyBtn" class="btn btn-primary">
+                    Save Key
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="./libs/bootstrap-5.2.3/bootstrap-5.2.3-dist/js/bootstrap.min.js"></script>
+<script src="./libs/sweetalert2/dist/sweetalert2.all.min.js"></script>\
+<script src="./libs/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+
+<script src="./js/resumeActions.js"></script>
+<script src="./js/resumeState.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/jobs.js"></script>
+<script src="./js/skills.js"></script>
+<script src="./js/education.js"></script>
+<script src="./js/certifications.js"></script>
+<script src="./js/awards.js"></script>
+<script src="./js/resumePreview.js"></script>
+<script src="./js/ai.js"></script>
+<script src="./js/settings.js"></script>
+<script src="./js/resumeExport.js"></script>
+
 </body>
 </html>

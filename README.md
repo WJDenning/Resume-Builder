@@ -69,6 +69,8 @@ All external libraries are stored locally within the project directory (no CDN u
 
 - SweetAlert2  
 
+- Bootstrap v 5.2.3
+
 Additional libraries, if added, will be documented and attributed within the application.
 
 ---
@@ -82,7 +84,7 @@ Additional libraries, if added, will be documented and attributed within the app
 
 2. Install backend dependencies  
 
-       npm install
+        npm install express sqlite3 cors dotenv
 
 3. Configure environment variables  
 

@@ -7,15 +7,19 @@ const router = express.Router();
 
 // AI SUGGESTION ENDPOINT
 router.post("/suggest", async (req, res) => {
-    const { text } = req.body;
+    const { text, apiKey } = req.body;
 
     if (!text) {
         return res.status(400).json({ error: "Text is required" });
     }
 
+    if (!apiKey) {
+        return res.status(400).json({ error: "API Key is required" });
+    }
+
     try {
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
             {
                 method: "POST",
                 headers: {

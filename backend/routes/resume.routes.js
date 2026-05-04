@@ -102,18 +102,12 @@ router.get("/:id/build", (req, res) => {
     const resumeId = req.params.id;
 
     db.all(
-        "SELECT * FROM resume_items WHERE resume_id = ?",
+        "SELECT * FROM resume_items WHERE resume_id = ? ORDER BY order_index",
         [resumeId],
         (err, items) => {
             if (err) return res.status(500).json({ error: err.message });
 
-            if (!items.length) {
-                return res.json({
-                    resume_id: resumeId,
-                    sections: {}
-                });
-            }
-
+            // Always return consistent structure
             const result = {
                 resume_id: resumeId,
                 jobs: [],
@@ -123,52 +117,94 @@ router.get("/:id/build", (req, res) => {
                 awards: []
             };
 
-            let pending = items.length;
+            if (!items.length) {
+                return res.json(result);
+            }
+
+            // Group IDs by type
+            const grouped = {
+                job: [],
+                skill: [],
+                education: [],
+                certification: [],
+                award: []
+            };
 
             items.forEach(item => {
-                const { item_type, item_id } = item;
-
-                let table = "";
-
-                switch (item_type) {
-                    case "job":
-                        table = "jobs";
-                        break;
-                    case "skill":
-                        table = "skills";
-                        break;
-                    case "education":
-                        table = "education";
-                        break;
-                    case "certification":
-                        table = "certifications";
-                        break;
-                    case "award":
-                        table = "awards";
-                        break;
-                    default:
-                        pending--;
-                        return;
+                if (grouped[item.item_type]) {
+                    grouped[item.item_type].push(item.item_id);
                 }
+            });
 
-                db.get(
-                    `SELECT * FROM ${table} WHERE id = ?`,
-                    [item_id],
-                    (err, row) => {
-                        if (!err && row) {
-                            result[table].push(row);
-                        }
+            let queriesRemaining = 5;
 
-                        pending--;
+            function checkDone() {
+                queriesRemaining--;
+                if (queriesRemaining === 0) {
+                    res.json(result);
+                }
+            }
 
-                        if (pending === 0) {
-                            res.json(result);
-                        }
+            // JOBS
+            if (grouped.job.length) {
+                db.all(
+                    `SELECT * FROM jobs WHERE id IN (${grouped.job.map(() => "?").join(",")})`,
+                    grouped.job,
+                    (err, rows) => {
+                        if (!err) result.jobs = rows;
+                        checkDone();
                     }
                 );
-            });
+            } else checkDone();
+
+            // SKILLS
+            if (grouped.skill.length) {
+                db.all(
+                    `SELECT * FROM skills WHERE id IN (${grouped.skill.map(() => "?").join(",")})`,
+                    grouped.skill,
+                    (err, rows) => {
+                        if (!err) result.skills = rows;
+                        checkDone();
+                    }
+                );
+            } else checkDone();
+
+            // EDUCATION
+            if (grouped.education.length) {
+                db.all(
+                    `SELECT * FROM education WHERE id IN (${grouped.education.map(() => "?").join(",")})`,
+                    grouped.education,
+                    (err, rows) => {
+                        if (!err) result.education = rows;
+                        checkDone();
+                    }
+                );
+            } else checkDone();
+
+            // CERTIFICATIONS
+            if (grouped.certification.length) {
+                db.all(
+                    `SELECT * FROM certifications WHERE id IN (${grouped.certification.map(() => "?").join(",")})`,
+                    grouped.certification,
+                    (err, rows) => {
+                        if (!err) result.certifications = rows;
+                        checkDone();
+                    }
+                );
+            } else checkDone();
+
+            // AWARDS
+            if (grouped.award.length) {
+                db.all(
+                    `SELECT * FROM awards WHERE id IN (${grouped.award.map(() => "?").join(",")})`,
+                    grouped.award,
+                    (err, rows) => {
+                        if (!err) result.awards = rows;
+                        checkDone();
+                    }
+                );
+            } else checkDone();
         }
     );
 });
-
 module.exports = router;
