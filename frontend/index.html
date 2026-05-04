@@ -19,12 +19,13 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="m-0">Resume Builder</h4>
 
+                    
                     <button id="libraryInfoBtn" class="btn btn-sm btn-outline-info">
                         Info
                     </button>
                 </div>
-
-            <div class="list-group">
+                
+                <div class="list-group">
 
                 <button class="list-group-item" data-section="resume">Resume</button>
                 <button class="list-group-item" data-section="jobs">Jobs</button>
@@ -34,44 +35,60 @@
                 <button class="list-group-item" data-section="certifications">Certifications</button>
                 <button class="list-group-item" data-section="ai">AI Assistant</button>
                 <button class="list-group-item" data-section="settings">API Settings</button>
-
+                
             </div>
 
         </div>
 
         <!-- MAIN CONTENT -->
-        <div class="col-9 p-4">
-
-            <!-- RESUME -->
-            <div id="resume" class="content-section">
-            
-                <div id="resumePreview" class="border p-3 mt-3"></div>
-
-                <label for="resumeName">Name on resume: </label>
-                <input type="text" name="resumeName" id="inputResumeName" />
-                <button id="generateResumeBtn" class="btn btn-primary">
-                    Export Resume
-                </button>
-
-            </div>
+            <div class="col-9 p-4">
+                
+                <!-- RESUME -->
+                <div id="resume" class="content-section">
+                    <div id="resumePreview" class="border p-3 mt-3"></div>
+                    
+                    <label for="inputResumeName">Name on resume:</label>
+                    <input type="text" name="resumeName" id="inputResumeName" class="form-control mb-2" />
+                    
+                    <button id="generateResumeBtn" class="btn btn-primary">
+                        Export Resume
+                    </button>
+                    
+                </div>
 
             <!-- JOBS -->
             <div id="jobs" class="content-section d-none">
                 <h2>Jobs</h2>
 
                 <form id="jobForm">
-                    <input class="form-control mb-2" id="jobCompany" placeholder="Company">
-                    <input class="form-control mb-2" id="jobTitle" placeholder="Title">
-                    <input class="form-control mb-2" id="jobLocation" placeholder="Location">
-                    <label class="form-label">Start Date</label>
+
+                    <label for="jobCompany">Company</label>
+                    <input class="form-control mb-2" id="jobCompany">
+
+                    <label for="jobTitle">Title</label>
+                    <input class="form-control mb-2" id="jobTitle">
+
+                    <label for="jobLocation">Location</label>
+                    <input class="form-control mb-2" id="jobLocation">
+
+                    <label for="jobStartDate">Start Date</label>
                     <input class="form-control mb-2" id="jobStartDate" type="date">
-                    <label class="form-label">End Date (or Current)</label>
+                    <label for="jobEndDate">End Date (or Current)</label>
                     <input class="form-control mb-2" id="jobEndDate" type="date">
-                    <label class="form-label">Description (one item per line for bullets)</label>
-                    <textarea class="form-control mb-2" id="jobDescription" placeholder="Line 1&#10;Line 2&#10;Line 3" rows="4"></textarea>                    <div class="mb-2">
-                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveJobDescription">Improve with AI</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoJobDescription" style="display: none;">Undo</button>
-                    </div>                    <button class="btn btn-success">Add Job</button>
+
+                    <label for="jobDescription">Description (one item per line for bullets)</label>
+                    <textarea class="form-control mb-2" id="jobDescription" rows="4"></textarea>
+
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveJobDescription">
+                            Improve with AI
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoJobDescription" style="display:none;">
+                            Undo
+                        </button>
+                    </div>
+
+                    <button class="btn btn-success">Add Job</button>
                 </form>
 
                 <div id="jobList" class="mt-3"></div>
@@ -82,7 +99,11 @@
                 <h2>Skills</h2>
 
                 <form id="skillForm">
-                    <input class="form-control mb-2" id="skillName" placeholder="Skill">
+
+                    <label for="skillName">Skill</label>
+                    <input class="form-control mb-2" id="skillName">
+
+                    <label for="skillProficiency">Proficiency</label>
                     <select class="form-control mb-2" id="skillProficiency">
                         <option value="">Select Proficiency</option>
                         <option value="Beginner">Beginner</option>
@@ -90,6 +111,7 @@
                         <option value="Advanced">Advanced</option>
                         <option value="Expert">Expert</option>
                     </select>
+
                     <button class="btn btn-success">Add Skill</button>
                 </form>
 
@@ -101,17 +123,35 @@
                 <h2>Education</h2>
 
                 <form id="educationForm">
-                    <input class="form-control mb-2" id="schoolName" placeholder="School">
-                    <input class="form-control mb-2" id="degree" placeholder="Degree">
-                    <input class="form-control mb-2" id="fieldOfStudy" placeholder="Field of Study">
-                    <label class="form-label">Graduation Date</label>
+
+                    <label for="schoolName">School</label>
+                    <input class="form-control mb-2" id="schoolName">
+
+                    <label for="degree">Degree</label>
+                    <input class="form-control mb-2" id="degree">
+
+                    <label for="fieldOfStudy">Field of Study</label>
+                    <input class="form-control mb-2" id="fieldOfStudy">
+
+                    <label for="educationDate">Graduation Date</label>
                     <input class="form-control mb-2" id="educationDate" type="date">
-                    <input class="form-control mb-2" id="gpa" placeholder="GPA (e.g., 3.8)">
-                    <label class="form-label">Description (optional)</label>
-                    <textarea class="form-control mb-2" id="educationDescription" placeholder="Notable achievements or honors" rows="3"></textarea>                    <div class="mb-2">
-                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveEducationDescription">Improve with AI</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoEducationDescription" style="display: none;">Undo</button>
-                    </div>                    <button class="btn btn-success">Add Education</button>
+
+                    <label for="gpa">GPA</label>
+                    <input class="form-control mb-2" id="gpa">
+
+                    <label for="educationDescription">Description (optional)</label>
+                    <textarea class="form-control mb-2" id="educationDescription" rows="3"></textarea>
+
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveEducationDescription">
+                            Improve with AI
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoEducationDescription" style="display:none;">
+                            Undo
+                        </button>
+                    </div>
+
+                    <button class="btn btn-success">Add Education</button>
                 </form>
 
                 <div id="educationList" class="mt-3"></div>
@@ -122,15 +162,29 @@
                 <h2>Awards</h2>
 
                 <form id="awardForm">
-                    <input class="form-control mb-2" id="awardTitle" placeholder="Award Title">
-                    <input class="form-control mb-2" id="awardIssuer" placeholder="Issuing Organization">
-                    <label class="form-label">Date Received</label>
+
+                    <label for="awardTitle">Award Title</label>
+                    <input class="form-control mb-2" id="awardTitle">
+
+                    <label for="awardIssuer">Issuing Organization</label>
+                    <input class="form-control mb-2" id="awardIssuer">
+
+                    <label for="awardDate">Date Received</label>
                     <input class="form-control mb-2" id="awardDate" type="date">
-                    <label class="form-label">Description (optional)</label>
-                    <textarea class="form-control mb-2" id="awardDescription" placeholder="Award details" rows="3"></textarea>                    <div class="mb-2">
-                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveAwardDescription">Improve with AI</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoAwardDescription" style="display: none;">Undo</button>
-                    </div>                    <button class="btn btn-success">Add Award</button>
+
+                    <label for="awardDescription">Description (optional)</label>
+                    <textarea class="form-control mb-2" id="awardDescription" rows="3"></textarea>
+
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm me-2" id="improveAwardDescription">
+                            Improve with AI
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="undoAwardDescription" style="display:none;">
+                            Undo
+                        </button>
+                    </div>
+
+                    <button class="btn btn-success">Add Award</button>
                 </form>
 
                 <div id="awardList" class="mt-3"></div>
@@ -141,10 +195,16 @@
                 <h2>Certifications</h2>
 
                 <form id="certForm">
-                    <input class="form-control mb-2" id="certName" placeholder="Certification Name">
-                    <input class="form-control mb-2" id="certIssuer" placeholder="Issuing Organization">
-                    <label class="form-label">Date Achieved</label>
+
+                    <label for="certName">Certification Name</label>
+                    <input class="form-control mb-2" id="certName">
+
+                    <label for="certIssuer">Issuing Organization</label>
+                    <input class="form-control mb-2" id="certIssuer">
+
+                    <label for="certDate">Date Achieved</label>
                     <input class="form-control mb-2" id="certDate" type="date">
+
                     <button class="btn btn-success">Add Certification</button>
                 </form>
 
@@ -155,6 +215,7 @@
             <div id="ai" class="content-section d-none">
                 <h2>AI Assistant</h2>
 
+                <label for="aiInput">Text to improve</label>
                 <textarea id="aiInput" class="form-control mb-2"></textarea>
 
                 <button id="aiButton" class="btn btn-warning">
@@ -168,7 +229,7 @@
             <div id="settings" class="content-section d-none">
                 <h2>API Settings</h2>
 
-                <label>Gemini API Key</label>
+                <label for="apiKeyInput">Gemini API Key</label>
                 <input id="apiKeyInput" class="form-control mb-2">
 
                 <button id="saveKeyBtn" class="btn btn-primary">
